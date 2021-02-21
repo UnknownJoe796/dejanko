@@ -46,7 +46,6 @@ data class MediaFile(val path: String)
 
 private val infoCache = HashMap<KClass<*>, DBInfo>()
 val KClass<*>.dbInfo: DBInfo get() = infoCache.getOrPut(this) {
-    println("Parsing ${simpleName}")
     val constructor = primaryConstructor!!
     val columns = ArrayList<DBColumn>(constructor.parameters.size)
     var pk: DBColumn? = null

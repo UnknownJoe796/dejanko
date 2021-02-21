@@ -1,0 +1,64 @@
+# To Do
+
+- [ ] Password Hashing / Password Field
+- [ ] Many-to-many fields
+- [ ] File Fields
+  - [ ] Multiple backing services
+    - [ ] S3 with [Java Client](https://aws.amazon.com/sdk-for-java/)
+    - [ ] Local for testing
+- [ ] Sessions with Redis [(see here)](https://ktor.io/docs/storages.html#custom_storage)
+- [ ] Structured Database Queries
+  - [ ] Query
+    - [ ] Where
+    - [ ] Select (partial)
+    - [ ] Joins (?)
+    - [ ] Order By
+    - [ ] Expressions
+  - [ ] Insert
+  - [ ] Update
+  - [ ] Upsert
+  - [ ] Delete
+- [ ] Signals Integration
+  - This will have to connect through some kind of inter-server mechanism, maybe Redis?
+  - [ ] Django to Kotlin
+    - [ ] Django Side
+    - [ ] Kotlin Side
+  - [ ] Kotlin to Django
+    - [ ] Django Side
+    - [ ] Kotlin Side
+- [ ] Admin
+  - [ ] Root / models organized by app
+  - [ ] List
+    - [ ] Row-sized instance summary
+    - [ ] Filters
+    - [ ] Search (?)
+    - [ ] Pagination
+    - [ ] Multi-instance operations
+  - [ ] Detail
+    - [ ] Form fields for:
+      - [ ] Numbers
+      - [ ] Text Fields
+      - [ ] File Fields
+      - [ ] Password Fields
+    - [ ] Insert
+    - [ ] Update
+    - [ ] Delete
+- [ ] Migrations
+  - Only used after fully transitioning away from Django
+  - [ ] `makemigrations` equivalent
+  - [ ] `migrate` equivalent
+  
+# Out of scope / unnecessary
+
+- Templates
+  - Handled by [Ktor's templating](https://ktor.io/docs/working-with-views.html) and a myriad of others.
+- Serialization
+  - Handled by [Jackson](https://github.com/FasterXML/jackson)
+- JWT
+  - Handled by [Ktor](https://ktor.io/docs/jwt.html#using-a-jwk-provider)
+- Logging
+  - Handled by [Ktor](https://ktor.io/docs/logging.html#mdc)
+- Sessions
+  - Handled by [Ktor](https://ktor.io/docs/cookie-header.html)
+  - [Example](https://gitlab.com/nanodeath/ktor-session-auth-example/-/blob/master/src/Routes.kt)
+  - However, it needs to link into Redis...

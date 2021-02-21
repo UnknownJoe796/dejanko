@@ -14,6 +14,7 @@ Many-many fields: auto-incrementing `id`, FKs `"$modelName_id"`
 Example: `"business_business_ad_business_id_ba9b75c8_fk_business_" FOREIGN KEY (business_id) REFERENCES business_business(id) DEFERRABLE INITIALLY DEFERRED`
 
 DateTimeField -> timestamp with time zone
+
 DateField -> date
 
 
