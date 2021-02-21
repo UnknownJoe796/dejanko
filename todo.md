@@ -1,6 +1,7 @@
 # To Do
 
 - [ ] Password Hashing / Password Field
+  - [ ] Must match Django, allowing user created with Django to log in with Kotlin
 - [ ] Many-to-many fields
 - [ ] File Fields
   - [ ] Multiple backing services
