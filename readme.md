@@ -17,6 +17,7 @@ A library attempting to replicate the major features of Django inside of Ktor wi
 - Create and run migrations without Django
 - Hook into Django signals
 - Admin
+- Celery Task Coordination
 
 ### Handled by existing options:
 

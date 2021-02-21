@@ -1,12 +1,15 @@
 # To Do
 
+- [ ] Test app in Django for integration testing
+- [ ] Reverse Foreign Key
 - [ ] Password Hashing / Password Field
   - [ ] Must match Django, allowing user created with Django to log in with Kotlin
+     - [Django's docs on how passwords are stored](https://docs.djangoproject.com/en/3.1/topics/auth/passwords/)
 - [ ] Many-to-many fields
 - [ ] File Fields
-  - [ ] Multiple backing services
-    - [ ] S3 with [Java Client](https://aws.amazon.com/sdk-for-java/)
-    - [ ] Local for testing
+  - [ ] Multiple backing services with NIO2
+    - [Generic Interface in Java 7](https://docs.oracle.com/javase/7/docs/api/java/nio/file/spi/FileSystemProvider.html)
+    - [S3](https://github.com/Upplication/Amazon-S3-FileSystem-NIO2)
 - [ ] Sessions with Redis [(see here)](https://ktor.io/docs/storages.html#custom_storage)
 - [ ] Structured Database Queries
   - [ ] Query
@@ -19,6 +22,13 @@
   - [ ] Update
   - [ ] Upsert
   - [ ] Delete
+- [ ] Tasks with Celery
+  - [ ] Corresponding Django ORM models
+  - [ ] Reverse engineer Redis format
+  - [ ] Start tasks in Kotlin
+  - [ ] Virtual tasks in Kotlin to be handled by Python
+  - [ ] Virtual tasks in Python to be handled by Kotlin
+  - [ ] Handle tasks in Kotlin
 - [ ] Signals Integration
   - This will have to connect through some kind of inter-server mechanism, maybe Redis?
   - [ ] Django to Kotlin
@@ -45,9 +55,31 @@
     - [ ] Update
     - [ ] Delete
 - [ ] Migrations
-  - Only used after fully transitioning away from Django
   - [ ] `makemigrations` equivalent
   - [ ] `migrate` equivalent
+- [ ] Auto-generate Kotlin models from Django project
+  - [ ] Use [`_meta` API](https://docs.djangoproject.com/en/3.1/ref/models/meta/)
+- [ ] Access security rules as annotations by field
+  - [ ] Defined per-field with an annotation
+  - [ ] Built-in concept of ownership?
+  - [ ] `fun Model.secureRead(forUser = user): Model`
+  - [ ] `fun Filter<Model>.secure(forUser = user): Filter<Model>`
+  - [ ] `fun Sort<Model>.secure(forUser = user): Sort<Model>`
+  - [ ] `fun Change<Model>.secure(forUser = user): Change<Model>`
+  - [ ] `fun Model.validate(forUser = user): Model`
+- [ ] Automatic API 
+  - [ ] Generates list endpoint
+    - [ ] Filters added automatically for indexed fields
+    - [ ] Complex filters (`or`, other expressions...)
+  - [ ] Generates detail endpoint
+  - [ ] Data Joining for list and detail
+    - [ ] Foreign Keys / Reverses
+    - [ ] Many-to-many fields  
+  - [ ] Generates post endpoint
+  - [ ] Generates put endpoint
+  - [ ] Generates patch endpoint
+  - [ ] Generates delete endpoint
+  - [ ] Generates documentation endpoint
   
 # Out of scope / unnecessary
 
