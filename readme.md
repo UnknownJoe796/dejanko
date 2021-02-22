@@ -33,6 +33,13 @@ A library attempting to replicate the major features of Django inside of Ktor wi
     - Handled by [Ktor](https://ktor.io/docs/cookie-header.html)
     - [Example](https://gitlab.com/nanodeath/ktor-session-auth-example/-/blob/master/src/Routes.kt)
     - However, it needs to link into Redis...
+  
+## Why?
+
+- Python is a fundamentally untyped language, lending itself to poor coding practices and dangerous, hard to find bugs.
+- Kotlin has far better autocomplete due to its typing.
+- Kotlin is more significantly more performant than python.
+- Maven has many libraries for high compatibility with almost anything.
     
 ## Are you dissing on my favorite web server framework, Django?
 

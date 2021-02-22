@@ -9,7 +9,7 @@
 - [ ] File Fields
   - [ ] Multiple backing services with NIO2
     - [Generic Interface in Java 7](https://docs.oracle.com/javase/7/docs/api/java/nio/file/spi/FileSystemProvider.html)
-    - [S3](https://github.com/Upplication/Amazon-S3-FileSystem-NIO2)
+    - [S3 library already exists](https://github.com/Upplication/Amazon-S3-FileSystem-NIO2)
 - [ ] Sessions with Redis [(see here)](https://ktor.io/docs/storages.html#custom_storage)
 - [ ] Structured Database Queries
   - [ ] Query
@@ -22,21 +22,15 @@
   - [ ] Update
   - [ ] Upsert
   - [ ] Delete
-- [ ] Tasks with Celery
-  - [ ] Corresponding Django ORM models
-  - [ ] Reverse engineer Redis format
-  - [ ] Start tasks in Kotlin
-  - [ ] Virtual tasks in Kotlin to be handled by Python
-  - [ ] Virtual tasks in Python to be handled by Kotlin
-  - [ ] Handle tasks in Kotlin
-- [ ] Signals Integration
-  - This will have to connect through some kind of inter-server mechanism, maybe Redis?
-  - [ ] Django to Kotlin
-    - [ ] Django Side
-    - [ ] Kotlin Side
-  - [ ] Kotlin to Django
-    - [ ] Django Side
-    - [ ] Kotlin Side
+- [ ] Language Passing
+  - Essentially, we need a way to have a cross-language request in both directions.
+  - [ ] Kotlin to Python
+  - [ ] Python to Kotlin
+- [ ] Signals
+  - [ ] Pre-save, post-save
+  - [ ] Pre-delete, post-delete
+  - [ ] Cross from Kotlin to Python using language passing
+  - [ ] Cross from Python to Kotlin using language passing
 - [ ] Admin
   - [ ] Root / models organized by app
   - [ ] List
@@ -51,6 +45,9 @@
       - [ ] Text Fields
       - [ ] File Fields
       - [ ] Password Fields
+      - [ ] Foreign-key Fields
+      - [ ] Many-to-many Fields
+      - [ ] Reverse Fields?
     - [ ] Insert
     - [ ] Update
     - [ ] Delete
@@ -59,14 +56,10 @@
   - [ ] `migrate` equivalent
 - [ ] Auto-generate Kotlin models from Django project
   - [ ] Use [`_meta` API](https://docs.djangoproject.com/en/3.1/ref/models/meta/)
+  - [ ] Also dump relevant settings
 - [ ] Access security rules as annotations by field
   - [ ] Defined per-field with an annotation
   - [ ] Built-in concept of ownership?
-  - [ ] `fun Model.secureRead(forUser = user): Model`
-  - [ ] `fun Filter<Model>.secure(forUser = user): Filter<Model>`
-  - [ ] `fun Sort<Model>.secure(forUser = user): Sort<Model>`
-  - [ ] `fun Change<Model>.secure(forUser = user): Change<Model>`
-  - [ ] `fun Model.validate(forUser = user): Model`
 - [ ] Automatic API 
   - [ ] Generates list endpoint
     - [ ] Filters added automatically for indexed fields
