@@ -14,4 +14,10 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation 'com.github.jasync-sql:jasync-postgresql:1.1.6'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.20"
+    testImplementation 'junit:junit:4.13'
+}
+
+test {
+    useJUnit()
+    maxHeapSize = '1G'
 }

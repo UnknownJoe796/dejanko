@@ -1,6 +1,6 @@
 # To Do
 
-- [ ] Test app in Django for integration testing
+- [X] Test app in Django for integration testing
 - [ ] Reverse Foreign Key
 - [ ] Password Hashing / Password Field
   - [ ] Must match Django, allowing user created with Django to log in with Kotlin
