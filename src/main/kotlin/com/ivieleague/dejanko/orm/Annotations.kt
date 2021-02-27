@@ -1,4 +1,4 @@
-package com.ivieleague.dejanko
+package com.ivieleague.dejanko.orm
 
 @Target(AnnotationTarget.CLASS)
 annotation class DjangoPath(

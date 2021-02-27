@@ -1,6 +1,9 @@
-package com.ivieleague.dejanko
+package com.ivieleague.dejanko.orm
 
 import kotlin.reflect.KClass
+import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty1
+import kotlin.reflect.KProperty2
 
 
 data class ForeignKey<KEY, T: Any>(val targetType: KClass<T>, val key: KEY) {

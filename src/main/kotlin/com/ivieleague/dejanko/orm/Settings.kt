@@ -1,4 +1,4 @@
-package com.ivieleague.dejanko
+package com.ivieleague.dejanko.orm
 
 import com.github.jasync.sql.db.SuspendingConnection
 
