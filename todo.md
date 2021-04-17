@@ -5,19 +5,19 @@
 - [ ] Password Hashing / Password Field
   - [ ] Must match Django, allowing user created with Django to log in with Kotlin
      - [Django's docs on how passwords are stored](https://docs.djangoproject.com/en/3.1/topics/auth/passwords/)
-- [ ] Many-to-many fields
+- [X] Many-to-many fields
 - [ ] File Fields
   - [ ] Multiple backing services with NIO2
     - [Generic Interface in Java 7](https://docs.oracle.com/javase/7/docs/api/java/nio/file/spi/FileSystemProvider.html)
     - [S3 library already exists](https://github.com/Upplication/Amazon-S3-FileSystem-NIO2)
 - [ ] Sessions with Redis [(see here)](https://ktor.io/docs/storages.html#custom_storage)
 - [ ] Structured Database Queries
-  - [ ] Query
-    - [ ] Where
-    - [ ] Select (partial)
-    - [ ] Joins (?)
-    - [ ] Order By
-    - [ ] Expressions
+  - [X] Query
+    - [X] Where
+    - [X] Select (partial)
+    - [X] Joins (?)
+    - [X] Order By
+    - [X] Expressions
   - [ ] Insert
   - [ ] Update
   - [ ] Upsert

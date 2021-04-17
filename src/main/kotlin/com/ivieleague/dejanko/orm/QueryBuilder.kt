@@ -1,10 +1,8 @@
 package com.ivieleague.dejanko.orm
 
-import com.ivieleague.dejanko.type
-import kotlin.math.exp
 import kotlin.reflect.KProperty1
 
-class QueryBuilder(val from: DBInfo<*>) {
+class QueryBuilder(val from: DBTypeTable<*>) {
     val select = ArrayList<DBColumn<*>>()
     val joins = ArrayList<Join>()
     var where: DBExpression<Boolean>? = null
@@ -39,7 +37,7 @@ class QueryBuilder(val from: DBInfo<*>) {
     inline fun <reified T: Any> leftJoin(expression: DBExpressionBuilder.()->DBExpression<Boolean>) {
         val info = T::class.dbInfo
         joins.add(Join(
-            table = info.tableName,
+            table = info,
             on = db(expression),
             kind = JoinKind.LEFT
         ))
@@ -48,7 +46,7 @@ class QueryBuilder(val from: DBInfo<*>) {
     inline fun <reified T: Any> rightJoin(expression: DBExpressionBuilder.()->DBExpression<Boolean>) {
         val info = T::class.dbInfo
         joins.add(Join(
-            table = info.tableName,
+            table = info,
             on = db(expression),
             kind = JoinKind.RIGHT
         ))
@@ -57,7 +55,7 @@ class QueryBuilder(val from: DBInfo<*>) {
     inline fun <reified T: Any> innerJoin(expression: DBExpressionBuilder.()->DBExpression<Boolean>) {
         val info = T::class.dbInfo
         joins.add(Join(
-            table = info.tableName,
+            table = info,
             on = db(expression),
             kind = JoinKind.INNER
         ))
@@ -66,7 +64,7 @@ class QueryBuilder(val from: DBInfo<*>) {
     inline fun <reified T: Any> outerJoin(expression: DBExpressionBuilder.()->DBExpression<Boolean>) {
         val info = T::class.dbInfo
         joins.add(Join(
-            table = info.tableName,
+            table = info,
             on = db(expression),
             kind = JoinKind.OUTER
         ))
@@ -89,7 +87,7 @@ class QueryBuilder(val from: DBInfo<*>) {
 
     inline infix fun <reified K: Any, V, KEY> DBExpression<ForeignKey<KEY, K>>.has(field: KProperty1<K, V>): DBExpression<V?> {
         joins.add(Join(
-            table = K::class.dbInfo.tableName,
+            table = K::class.dbInfo,
             on = db { this@has.raw equal K::class.dbInfo.primaryKey as DBExpression<KEY> },
             kind = JoinKind.LEFT
         ))
@@ -97,7 +95,7 @@ class QueryBuilder(val from: DBInfo<*>) {
     }
     inline infix fun <reified K: Any, V, KEY> KProperty1<*, ForeignKey<KEY, K>>.has(field: KProperty1<K, V>): DBExpression<V?> {
         joins.add(Join(
-            table = K::class.dbInfo.tableName,
+            table = K::class.dbInfo,
             on = db { prop(this@has).raw equal K::class.dbInfo.primaryKey as DBExpression<KEY> },
             kind = JoinKind.LEFT
         ))

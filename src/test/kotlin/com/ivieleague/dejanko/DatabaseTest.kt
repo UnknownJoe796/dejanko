@@ -2,6 +2,7 @@ package com.ivieleague.dejanko
 
 import com.github.jasync.sql.db.asSuspending
 import com.github.jasync.sql.db.postgresql.PostgreSQLConnectionBuilder
+import com.ivieleague.dejanko.orm.*
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.LocalDate

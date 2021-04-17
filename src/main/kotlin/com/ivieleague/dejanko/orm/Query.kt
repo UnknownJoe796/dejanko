@@ -4,7 +4,7 @@ import com.ivieleague.dejanko.forEachBetween
 
 data class Query(
     val select: List<DBColumn<*>>,
-    val from: DBInfo<*>,
+    val from: DBTable,
     val joins: List<Join> = listOf(),
     val where: DBExpression<Boolean>? = null,
     val orderBy: List<Sort> = listOf(),
@@ -23,7 +23,7 @@ data class Query(
             between = { to.append(", ") }
         )
         to.append(" FROM ")
-        to.append(from.tableName)
+        to.append(from.name)
         to.append(' ')
         joins.forEach { it.write(to) }
         if(where != null){
@@ -73,7 +73,7 @@ data class Sort(
 enum class JoinKind(val sql: String) { LEFT("LEFT OUTER"), RIGHT("OUTER RIGHT"), INNER("INNER"), OUTER("OUTER") }
 
 data class Join(
-    val table: String,
+    val table: DBTable,
     val on: DBExpression<Boolean>,
     val kind: JoinKind = JoinKind.INNER
 ) {
@@ -81,7 +81,7 @@ data class Join(
     fun write(to: QueryWriter){
         to.append(kind.sql)
         to.append(" JOIN ")
-        to.append(table)
+        table.write(to)
         to.append(" ON ")
         on.write(to)
         to.append(' ')

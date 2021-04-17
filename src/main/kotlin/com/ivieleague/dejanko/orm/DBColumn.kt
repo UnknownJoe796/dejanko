@@ -10,15 +10,13 @@ interface DBColumn<T>: DBExpression<T> {
     val type: DBType<T>
     fun writeSelect(to: QueryWriter)
 }
-class DBFieldColumn<K: Any, T>(
-    val parentType: KClass<K>,
-    val parameter: KParameter,
-    val property: KProperty1<K, T>,
+open class DBFieldColumn<T>(
+    val source: DBTable,
     override val columnName: String,
     override val type: DBType<T>
 ): DBColumn<T> {
     override fun write(to: QueryWriter) {
-        to.append(parentType.dbInfo.tableName)
+        to.append(source.name)
         to.append('.')
         to.append(columnName)
     }
