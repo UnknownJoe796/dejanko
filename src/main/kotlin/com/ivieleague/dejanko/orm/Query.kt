@@ -1,8 +1,11 @@
 package com.ivieleague.dejanko.orm
 
+import com.github.jasync.sql.db.ResultSet
+import com.github.jasync.sql.db.RowData
+import com.github.jasync.sql.db.SuspendingConnection
 import com.ivieleague.dejanko.forEachBetween
 
-data class Query(
+data class Query<T>(
     val select: List<DBColumn<*>>,
     val from: DBInfo<*>,
     val joins: List<Join> = listOf(),
@@ -11,7 +14,8 @@ data class Query(
     val limit: Int? = null,
     val offset: Int? = null,
     val distinct: Boolean = false,
-    val groupBy: DBExpression<*>? = null
+    val groupBy: DBExpression<*>? = null,
+    val parse: (ResultSet) -> TypedResultSet<T>
 ) {
     fun write(to: QueryWriter){
         to.append("SELECT ")
@@ -49,6 +53,18 @@ data class Query(
         if(offset != null){
             to.append("OFFSET $offset ")
         }
+    }
+
+    override fun toString(): String {
+        val writer = QueryWriter()
+        this.write(writer)
+        return writer.builder.toString()
+    }
+
+    suspend fun execute(db: SuspendingConnection = Settings.defaultDb): TypedResultSet<T> {
+        val writer = QueryWriter()
+        this.write(writer)
+        return parse(db.sendPreparedStatement(writer.toString(), writer.variables).rows)
     }
 }
 

@@ -12,4 +12,6 @@ class QueryWriter(val builder: StringBuilder = StringBuilder()) : Appendable by 
     fun emitType(type: DBType<*>) {
 //        return type.sql
     }
+
+    override fun toString(): String = builder.toString()
 }

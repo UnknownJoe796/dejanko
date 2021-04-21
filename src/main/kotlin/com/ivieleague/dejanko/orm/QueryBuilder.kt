@@ -1,5 +1,7 @@
 package com.ivieleague.dejanko.orm
 
+import com.github.jasync.sql.db.ResultSet
+import com.github.jasync.sql.db.RowData
 import com.ivieleague.dejanko.type
 import kotlin.math.exp
 import kotlin.reflect.KProperty1
@@ -14,7 +16,7 @@ class QueryBuilder(val from: DBInfo<*>) {
     var distinct: Boolean = false
     var groupBy: DBExpression<*>? = null
 
-    fun build() = Query(
+    fun <T> build(parse: (ResultSet)->TypedResultSet<T>) = Query(
         select = select,
         from = from,
         joins = joins,
@@ -24,6 +26,7 @@ class QueryBuilder(val from: DBInfo<*>) {
         offset = offset,
         distinct = distinct,
         groupBy = groupBy,
+        parse = parse
     )
 
     inline fun <reified T: Any> select() {

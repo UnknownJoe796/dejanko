@@ -39,11 +39,15 @@ fun KType.dbType(): DBType<*> {
 class DBTypeNoOp<T>: DBType<T> {
     @Suppress("UNCHECKED_CAST")
     override fun parse(value: Any?): T = value as T
+
+    override fun toString(): String = "NoOp"
 }
 
 object DBTypeMediaFile: DBType<MediaFile> {
     @Suppress("UNCHECKED_CAST")
     override fun parse(value: Any?): MediaFile = MediaFile(value as String)
+
+    override fun toString(): String = "MediaFile"
 }
 
 class DBTypeForeignKey<KEY, TABLE: Any>(val table: KClass<TABLE>, val keyType: DBType<KEY>): DBType<ForeignKey<KEY, TABLE>> {
@@ -51,6 +55,8 @@ class DBTypeForeignKey<KEY, TABLE: Any>(val table: KClass<TABLE>, val keyType: D
     override fun getColumnName(defaultName: String): String {
         return defaultName + "_" + table.pkInfo.name.snakeCase()
     }
+
+    override fun toString(): String = "ForeignKey<${table.simpleName}, ${keyType}>"
 }
 
 class DBTypeNullable<T>(val type: DBType<T>): DBType<T?> {
@@ -58,4 +64,6 @@ class DBTypeNullable<T>(val type: DBType<T>): DBType<T?> {
         return if(value == null) null
         else type.parse(value)
     }
+    override fun getColumnName(defaultName: String): String = type.getColumnName(defaultName)
+    override fun toString(): String = type.toString() + "?"
 }

@@ -8,9 +8,9 @@ import kotlin.reflect.KProperty2
 
 data class ForeignKey<KEY, T: Any>(val targetType: KClass<T>, val key: KEY) {
     suspend fun resolve(): T {
-        return Settings.defaultDb
+        return SimpleParser(targetType)(Settings.defaultDb
             .sendPreparedStatement(targetType.dbInfo.queryStart() + " WHERE id=?", listOf(key))
-            .rows.parsed(targetType).single()
+            .rows).single()
     }
 }
 

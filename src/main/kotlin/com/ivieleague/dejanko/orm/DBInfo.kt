@@ -24,8 +24,8 @@ val <K: Any> KClass<K>.dbInfo: DBInfo<K> get() = infoCache.getOrPut(this) {
     val columns = ArrayList<DBFieldColumn<K, *>>(constructor.parameters.size)
     var pk: DBFieldColumn<K, *>? = null
     for(param in constructor.parameters){
-        println("Parsing param ${param.name}")
         val type = param.type.dbType() as DBType<Any>
+        println("Parsing param ${param.name}, type: ${type}, name: ${type.getColumnName(param.name!!.snakeCase())}")
         val column = DBFieldColumn(
             parentType = this,
             parameter = param,

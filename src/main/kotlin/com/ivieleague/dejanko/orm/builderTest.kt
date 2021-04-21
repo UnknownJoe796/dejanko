@@ -18,19 +18,14 @@ fun main(){
     println(TestModel::class.dbInfo)
     println(LinkedModel::class.dbInfo)
 
-    val queryA = with(QueryBuilder(TestModel::class.dbInfo)) {
-        select<TestModel>()
+    val queryA = query<TestModel> {
         leftJoin<LinkedModel> { LinkedModel::testModel equal TestModel::id }
-//        val total = select("plusOne") { LinkedModel::x + 1 }
         where { TestModel::created greaterThan Date() }
-        build()
     }
-    val queryB = with(QueryBuilder(LinkedModel::class.dbInfo)) {
-        select<LinkedModel>()
+    val queryB = query<LinkedModel> {
         where { LinkedModel::testModel has TestModel::k greaterThan 4 }
-        build()
     }
 
-    println(QueryWriter().also { queryA.write(it) }.builder.toString())
-    println(QueryWriter().also { queryB.write(it) }.builder.toString())
+    println(queryA)
+    println(queryB)
 }

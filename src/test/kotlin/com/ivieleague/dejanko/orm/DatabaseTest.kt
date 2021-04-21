@@ -1,4 +1,4 @@
-package com.ivieleague.dejanko
+package com.ivieleague.dejanko.orm
 
 import com.github.jasync.sql.db.asSuspending
 import com.github.jasync.sql.db.postgresql.PostgreSQLConnectionBuilder
@@ -55,8 +55,7 @@ class DatabaseTest {
         println("Launching...")
         runBlocking {
             db.connect()
-            val rows = db.sendQuery(ModelA::class.dbInfo.queryStart())
-            val instances = rows.rows.parsed<ModelA>()
+            val instances = query<ModelA>().execute()
             for(instance in instances){
                 println(instance)
                 println("  Linked to:")
