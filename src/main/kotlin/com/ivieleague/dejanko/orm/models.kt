@@ -7,10 +7,17 @@ import kotlin.reflect.KProperty2
 
 
 data class ForeignKey<KEY, T: Any>(val targetType: KClass<T>, val key: KEY) {
+    var prefetched: T? = null
     suspend fun resolve(): T {
-        return SimpleParser(targetType)(Settings.defaultDb
+        val existing = prefetched
+        if(existing != null) return existing
+        val data = Settings.defaultDb
             .sendPreparedStatement(targetType.dbInfo.queryStart() + " WHERE id=?", listOf(key))
-            .rows).single()
+            .rows
+        val parser = SimpleParser(targetType)(data)
+        val result = TypedResultSet(data, parser).single()
+        prefetched = result
+        return result
     }
 }
 

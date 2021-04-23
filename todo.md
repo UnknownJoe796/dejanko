@@ -12,12 +12,12 @@
     - [S3 library already exists](https://github.com/Upplication/Amazon-S3-FileSystem-NIO2)
 - [ ] Sessions with Redis [(see here)](https://ktor.io/docs/storages.html#custom_storage)
 - [ ] Structured Database Queries
-  - [ ] Query
-    - [ ] Where
-    - [ ] Select (partial)
-    - [ ] Joins (?)
-    - [ ] Order By
-    - [ ] Expressions
+  - [X] Query
+    - [X] Where
+    - [X] Select (partial)
+    - [X] Joins (?)
+    - [X] Order By
+    - [X] Expressions
   - [ ] Insert
   - [ ] Update
   - [ ] Upsert

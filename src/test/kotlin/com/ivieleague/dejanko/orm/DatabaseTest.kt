@@ -2,6 +2,7 @@ package com.ivieleague.dejanko.orm
 
 import com.github.jasync.sql.db.asSuspending
 import com.github.jasync.sql.db.postgresql.PostgreSQLConnectionBuilder
+import com.ivieleague.dejanko.orm.DBExpressionBuilder.greaterThan
 import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
@@ -55,12 +56,15 @@ class DatabaseTest {
         println("Launching...")
         runBlocking {
             db.connect()
-            val instances = query<ModelA>().execute()
+            val instances = query<ModelA>()
+                .where { ModelA::id equal 1 }
+                .selectRelated(ModelA::foreignKeyField, ModelB::id)
+                .execute()
             for(instance in instances){
                 println(instance)
                 println("  Linked to:")
-                println("  " + instance.foreignKeyRecursiveField?.resolve())
-                println("  " + instance.foreignKeyField?.resolve())
+                println("  " + instance.foreignKeyRecursiveField?.prefetched)
+                println("  " + instance.foreignKeyField?.prefetched)
             }
             db.disconnect()
         }

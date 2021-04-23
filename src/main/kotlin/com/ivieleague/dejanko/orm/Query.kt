@@ -4,10 +4,12 @@ import com.github.jasync.sql.db.ResultSet
 import com.github.jasync.sql.db.RowData
 import com.github.jasync.sql.db.SuspendingConnection
 import com.ivieleague.dejanko.forEachBetween
+import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
 
 data class Query<T>(
     val select: List<DBColumn<*>>,
-    val from: DBInfo<*>,
+    val from: DBTable,
     val joins: List<Join> = listOf(),
     val where: DBExpression<Boolean>? = null,
     val orderBy: List<Sort> = listOf(),
@@ -15,7 +17,7 @@ data class Query<T>(
     val offset: Int? = null,
     val distinct: Boolean = false,
     val groupBy: DBExpression<*>? = null,
-    val parse: (ResultSet) -> TypedResultSet<T>
+    val parse: RowDataParser<T>
 ) {
     fun write(to: QueryWriter){
         to.append("SELECT ")
@@ -27,7 +29,7 @@ data class Query<T>(
             between = { to.append(", ") }
         )
         to.append(" FROM ")
-        to.append(from.tableName)
+        to.emitTable(from)
         to.append(' ')
         joins.forEach { it.write(to) }
         if(where != null){
@@ -64,8 +66,10 @@ data class Query<T>(
     suspend fun execute(db: SuspendingConnection = Settings.defaultDb): TypedResultSet<T> {
         val writer = QueryWriter()
         this.write(writer)
-        return parse(db.sendPreparedStatement(writer.toString(), writer.variables).rows)
+        val data = db.sendPreparedStatement(writer.toString(), writer.variables).rows
+        return TypedResultSet(data, parse(data))
     }
+
 }
 
 data class Sort(
@@ -89,15 +93,14 @@ data class Sort(
 enum class JoinKind(val sql: String) { LEFT("LEFT OUTER"), RIGHT("OUTER RIGHT"), INNER("INNER"), OUTER("OUTER") }
 
 data class Join(
-    val table: String,
+    val table: DBAliasTable,
     val on: DBExpression<Boolean>,
     val kind: JoinKind = JoinKind.INNER
 ) {
-
     fun write(to: QueryWriter){
         to.append(kind.sql)
         to.append(" JOIN ")
-        to.append(table)
+        to.emitTable(table)
         to.append(" ON ")
         on.write(to)
         to.append(' ')
